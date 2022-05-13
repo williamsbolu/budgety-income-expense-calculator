@@ -19,7 +19,7 @@ const BudgetForm = (props) => {
         const value = valueRef.current.value;
         console.log(expenseType);
 
-        if (description.trim().length > 1 && value.trim().length > 1) {
+        if (description.trim().length > 0 && value.trim().length > 0) {
             const items =  {
                 id: Math.random(),
                 type: expenseType,
@@ -30,6 +30,8 @@ const BudgetForm = (props) => {
             props.onUpdateBudgetItems(items);
             descriptionRef.current.value = "";
             valueRef.current.value = "";
+            descriptionRef.current.focus();
+
         } else {
             return;
         }
