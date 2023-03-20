@@ -1,13 +1,18 @@
+import { useContext } from 'react';
+
+import BudgetDataContext from '../../store/budgetData-context';
 import styles from './BudgetData.module.css';
 
-const BudgetData = (props) => {
+
+const BudgetData = () => {
+    const budgetDataCtx = useContext(BudgetDataContext);
 
     // form the numbers of the data into a string readable form
-    const budgetFormat = props.data.budget.toLocaleString();
-    const totalIncomeFormat = props.data.totalIncome.toLocaleString();
-    const totalExpensesFormat = props.data.totalExpenses.toLocaleString();
+    const budgetFormat = budgetDataCtx.budget.toLocaleString();
+    const totalIncomeFormat = budgetDataCtx.totalIncome.toLocaleString();
+    const totalExpensesFormat = budgetDataCtx.totalExpenses.toLocaleString();
 
-    const updatedPercentage = Math.round(props.data.expensesPercentages);
+    const updatedPercentage = Math.round(budgetDataCtx.expensesPercentages);
 
     const month = new Date().toLocaleString('en-US', { month: 'long'});
     

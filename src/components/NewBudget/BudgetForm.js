@@ -1,40 +1,41 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 
-import Button from "../UI/Button";
+import BudgetDataContext from "../../store/budgetData-context";
 import classes from './BudgetForm.module.css';
 
 
-
-const BudgetForm = (props) => {
+const BudgetForm = () => {
     const type = useRef();
     const descriptionRef = useRef();
     const valueRef = useRef();
     const [isValid, setIsValid] = useState(false);
+
+    const budgetDataCtx = useContext(BudgetDataContext);
 
     const submitHandler = (event) => {
         event.preventDefault();
 
         const expenseType = type.current.value;
         const description = descriptionRef.current.value;
-        const value = valueRef.current.value;
+        const value = +valueRef.current.value;
         console.log(expenseType);
 
-        if (description.trim().length > 0 && value.trim().length > 0) {
+        if (description.trim().length > 0 && value > 0) {
             const items =  {
                 id: Math.random(),
                 type: expenseType,
                 description: description,
-                value: parseInt(value)
+                value: value
             };
     
-            props.onUpdateBudgetItems(items);
+            budgetDataCtx.addItem(items);
             descriptionRef.current.value = "";
             valueRef.current.value = "";
             descriptionRef.current.focus();
 
         } else {
             return;
-        }
+        };
     };
 
     const typeChangeHandler = (event) => {
@@ -43,7 +44,7 @@ const BudgetForm = (props) => {
         } else {
             setIsValid(false);
         };
-    }
+    };
 
     return (
         <form className={classes['form-body']} onSubmit={submitHandler}>
@@ -54,11 +55,10 @@ const BudgetForm = (props) => {
                 </select>
                 <input type="text" className={classes['add__description']} ref={descriptionRef} placeholder="Add description" />
                 <input type="number" className={classes['add__value']} ref={valueRef} placeholder="Value" />
-                <Button><ion-icon name="checkmark-outline"></ion-icon></Button>
+                <button className={classes.add__btn}><ion-icon name="checkmark-outline"></ion-icon></button>
             </div>
         </form>
     );
-
 };
 
 export default BudgetForm;

@@ -1,10 +1,14 @@
+import { useContext } from 'react';
+
+import BudgetDataContext from '../../store/budgetData-context';
 import classes from './BudgetIncomeItem.module.css';
 
 
 const BudgetIncomeItem = (props) => {
+    const budgetDataCtx = useContext(BudgetDataContext);
 
     const deleteItem = () => {
-        props.deleteBudgetItem(props.id);
+        budgetDataCtx.removeItem(props.id)
     };
 
     // form the numbers of the value into a string readable form

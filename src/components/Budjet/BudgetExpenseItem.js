@@ -1,10 +1,14 @@
+import { useContext } from 'react';
+
+import BudgetDataContext from '../../store/budgetData-context';
 import classes from './BudgetExpenseItem.module.css';
 
 
 const BudgetExpenseItem = (props) => {
+    const budgetDataCtx = useContext(BudgetDataContext);
 
     const deleteItem = () => {
-        props.deleteBudgetItem(props.id);
+        budgetDataCtx.removeItem(props.id);
     };
     
     let itemPercentage;
